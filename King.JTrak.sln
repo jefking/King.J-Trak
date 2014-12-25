@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King.JTrak", "King.JTrak\King.JTrak.csproj", "{8BBE4365-59F3-4644-93AC-2F90E4AE0053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King.JTrak.Core", "King.JTrak\King.JTrak.Core.csproj", "{8BBE4365-59F3-4644-93AC-2F90E4AE0053}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{127B4385-EF5D-4807-B4A9-0FDD60C80A04}"
 	ProjectSection(SolutionItems) = preProject
