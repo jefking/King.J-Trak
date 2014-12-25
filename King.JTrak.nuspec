@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>King.JTrak</id>
+    <version>0.0.0</version>
+    <title>King.J-Trak</title>
+    <authors>Jef King</authors>
+    <owners>Jef King</owners>
+    <licenseUrl>https://github.com/jefking/King.J-Trak/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jefking/King.J-Trak</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/jefking/King.J-Trak/master/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Synchronize Between Azure Table Storage and Blob Storage</description>
+    <summary>Synchronize Between Azure Table Storage and Blob Storage</summary>
+    <releaseNotes>ALPHA - Prerelease</releaseNotes>
+    <copyright>Jef King</copyright>
+    <language>en-US</language>
+    <tags>King.JTrak Azure Blob Json Synchronize Synchronization NoSQL structured-query-language entities entity query row rows data sync table-storage tables Data-Sync Table Azure-Storage Storage Account Storage-Account King.Azure</tags>
+    <dependencies>
+      <dependency id="King.Azure" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="King.JTrak\bin\Release\King.JTrak.dll" target="lib\net451\King.JTrak.dll" />
+  </files>
+</package>
