@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8D994D2D-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{1E0DDF08-223E-46B4-8DD4-01FAC4D076F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King.JTrak.Integration.Test", "King.JTrak.Integration.Test\King.JTrak.Integration.Test.csproj", "{69DE3208-279C-48C0-9060-5431D8959CA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "King.JTrak.Unit.Test", "King.JTrak.Unit.Test\King.JTrak.Unit.Test.csproj", "{09BA924C-489E-4C25-AB45-675CAA123ED5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +30,20 @@ Global
 		{8BBE4365-59F3-4644-93AC-2F90E4AE0053}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BBE4365-59F3-4644-93AC-2F90E4AE0053}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BBE4365-59F3-4644-93AC-2F90E4AE0053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69DE3208-279C-48C0-9060-5431D8959CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69DE3208-279C-48C0-9060-5431D8959CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69DE3208-279C-48C0-9060-5431D8959CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69DE3208-279C-48C0-9060-5431D8959CA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BA924C-489E-4C25-AB45-675CAA123ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BA924C-489E-4C25-AB45-675CAA123ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BA924C-489E-4C25-AB45-675CAA123ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BA924C-489E-4C25-AB45-675CAA123ED5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69DE3208-279C-48C0-9060-5431D8959CA9} = {8D994D2D-9B6D-41D3-BBB9-86ED4EE5706D}
+		{09BA924C-489E-4C25-AB45-675CAA123ED5} = {8D994D2D-9B6D-41D3-BBB9-86ED4EE5706D}
 	EndGlobalSection
 EndGlobal
