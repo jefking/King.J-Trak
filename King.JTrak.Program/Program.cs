@@ -27,7 +27,7 @@
                     , config.FromConnectionString
                     , config.FromTable
                     , config.ToConnectionString
-                    , config.ToTable
+                    , config.ToContainer
                     , Environment.NewLine);
 
                 var sync = new Synchronizer(config);
