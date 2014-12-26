@@ -28,8 +28,39 @@
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="config">Configuration</param>
         public Synchronizer(ConfigValues config)
         {
+            if (null == config)
+            {
+                throw new ArgumentNullException("config");
+            }
+
+            this.from = new TableStorage(config.FromTable, config.FromConnectionString);
+            this.to = new Container(config.ToContainer, config.ToConnectionString);
+        }
+
+        /// <summary>
+        /// Mockable Constructor
+        /// </summary>
+        /// <param name="from">From</param>
+        /// <param name="to">To</param>
+        public Synchronizer(ITableStorage from, IContainer to)
+        {
+            if (null == from)
+            {
+                throw new ArgumentNullException("from");
+            }
+            if (null == to)
+            {
+                throw new ArgumentNullException("to");
+            }
+
+            this.from = from;
+            this.to = to;
         }
         #endregion
 
@@ -50,7 +81,7 @@
                 Trace.TraceInformation("Storing data to {0}.", this.to.Name);
                 foreach (var e in entities)
                 {
-                    var name = string.Format("", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
+                    var name = string.Format("{0}-{1}", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
                     await this.to.Save(name, e);
                 }
             }
