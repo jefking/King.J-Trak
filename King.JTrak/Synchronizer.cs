@@ -36,7 +36,7 @@
         /// Default Constructor
         /// </summary>
         /// <param name="config">Configuration</param>
-        public Synchronizer(ConfigValues config)
+        public Synchronizer(IConfigValues config)
         {
             if (null == config)
             {
