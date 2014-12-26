@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>King.JTrak</id>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <title>King.J-Trak</title>
     <authors>Jef King</authors>
     <owners>Jef King</owners>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Synchronize Between Azure Table Storage and Blob Storage</description>
     <summary>Synchronize Between Azure Table Storage and Blob Storage</summary>
-    <releaseNotes>ALPHA - Prerelease</releaseNotes>
+    <releaseNotes>Synchronizes between table entities and blobs</releaseNotes>
     <copyright>Jef King</copyright>
     <language>en-US</language>
     <tags>King.JTrak Azure Blob Json Synchronize Synchronization NoSQL structured-query-language entities entity query row rows data sync table-storage tables Data-Sync Table Azure-Storage Storage Account Storage-Account King.Azure</tags>
