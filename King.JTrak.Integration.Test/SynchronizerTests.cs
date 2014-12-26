@@ -14,7 +14,7 @@
     public class SynchronizerTests
     {
         [Test]
-        public async Task Synchronize()
+        public async Task SynchronizeMultiple()
         {
             var random = new Random();
             var count = random.Next(1, 25);
@@ -57,6 +57,60 @@
                 var t = await to.GetText(name);
                 Assert.IsNotNull(t);
                 var entity = JsonConvert.DeserializeObject<TableEntity>(t);
+                var returned = from ee in tEntities
+                               where entity.PartitionKey == ee.PartitionKey
+                                && entity.RowKey == ee.RowKey
+                               select ee;
+                Assert.IsNotNull(returned);
+            }
+
+            await from.Delete();
+            await to.Delete();
+        }
+
+        [Test]
+        public async Task SynchronizeSingle()
+        {
+            var random = new Random();
+            var count = random.Next(1, 25);
+            var c = new ConfigValues
+            {
+                FromConnectionString = "UseDevelopmentStorage=true;",
+                FromTable = "t" + random.Next(),
+                ToConnectionString = "UseDevelopmentStorage=true;",
+                ToContainer = "c" + random.Next(),
+                Structure = BlobStructure.SingleBlob,
+            };
+
+            //generate
+            var from = new TableStorage(c.FromTable, c.FromConnectionString);
+            await from.CreateIfNotExists();
+            var tEntities = new List<TableEntity>(count);
+            for (var i = 0; i < count; i++)
+            {
+                var e = new TableEntity
+                {
+                    PartitionKey = Guid.NewGuid().ToString(),
+                    RowKey = Guid.NewGuid().ToString(),
+                };
+                tEntities.Add(e);
+            }
+
+            await from.Insert(tEntities);
+
+            //Synchronize
+            var s = new Synchronizer(c);
+            await s.Run();
+
+            //validate
+            var to = new Container(c.ToContainer, c.ToConnectionString);
+            var blob = await to.GetText(c.FromTable + ".json");
+
+            var entities = JsonConvert.DeserializeObject<List<TableEntity>>(blob);
+            Assert.IsNotNull(entities);
+            Assert.AreEqual(count, entities.Count());
+            foreach (var entity in entities)
+            {
                 var returned = from ee in tEntities
                                where entity.PartitionKey == ee.PartitionKey
                                 && entity.RowKey == ee.RowKey

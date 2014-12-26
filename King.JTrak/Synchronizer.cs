@@ -3,6 +3,7 @@
     using King.Azure.Data;
     using King.JTrak.Models;
     using Microsoft.WindowsAzure.Storage.Table;
+    using Newtonsoft.Json;
     using System;
     using System.Diagnostics;
     using System.Linq;
@@ -23,6 +24,11 @@
         /// To Azure Blob Storage
         /// </summary>
         protected readonly IContainer to = null;
+
+        /// <summary>
+        /// Blob Structure
+        /// </summary>
+        protected readonly BlobStructure structure = BlobStructure.MultipleBlobs;
         #endregion
 
         #region Constructors
@@ -39,6 +45,7 @@
 
             this.from = new TableStorage(config.FromTable, config.FromConnectionString);
             this.to = new Container(config.ToContainer, config.ToConnectionString);
+            this.structure = config.Structure;
         }
 
         /// <summary>
@@ -46,7 +53,7 @@
         /// </summary>
         /// <param name="from">From</param>
         /// <param name="to">To</param>
-        public Synchronizer(ITableStorage from, IContainer to)
+        public Synchronizer(ITableStorage from, IContainer to, BlobStructure structure = BlobStructure.MultipleBlobs)
         {
             if (null == from)
             {
@@ -59,6 +66,7 @@
 
             this.from = from;
             this.to = to;
+            this.structure = structure;
         }
         #endregion
 
@@ -77,10 +85,18 @@
             if (null != entities && entities.Any())
             {
                 Trace.TraceInformation("Storing data to {0}.", this.to.Name);
-                foreach (var e in entities)
+                switch(structure)
                 {
-                    var name = string.Format("{0}-{1}.json", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
-                    await this.to.Save(name, e);
+                    case BlobStructure.SingleBlob:
+                        await this.to.Save(string.Format("{0}.json", from.Name), JsonConvert.SerializeObject(entities));
+                        break;
+                    default:
+                        foreach (var e in entities)
+                        {
+                            var name = string.Format("{0}-{1}.json", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
+                            await this.to.Save(name, e);
+                        }
+                        break;
                 }
             }
             else

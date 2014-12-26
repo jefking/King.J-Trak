@@ -3,6 +3,7 @@
     using King.Azure.Data;
     using King.JTrak.Models;
     using Microsoft.WindowsAzure.Storage.Table;
+    using Newtonsoft.Json;
     using NSubstitute;
     using NUnit.Framework;
     using System;
@@ -78,6 +79,34 @@
                 var name = string.Format("{0}-{1}.json", dic[TableStorage.PartitionKey], dic[TableStorage.RowKey]);
                 to.Received().Save(name, dic);
             }
+        }
+
+        [Test]
+        public async Task RunSingleBlob()
+        {
+            var random = new Random();
+            var count = random.Next(1, 25);
+            var entities = new List<IDictionary<string, object>>();
+            var to = Substitute.For<IContainer>();
+            for (var i = 0; i < count; i++)
+            {
+                var dic = new Dictionary<string, object>();
+                dic.Add(TableStorage.PartitionKey, Guid.NewGuid().ToString());
+                dic.Add(TableStorage.RowKey, Guid.NewGuid().ToString());
+                entities.Add(dic);
+            }
+            var from = Substitute.For<ITableStorage>();
+            from.Name.Returns("test");
+            from.Query(Arg.Any<TableQuery>()).Returns(Task.FromResult((IEnumerable<IDictionary<string, object>>)entities));
+            to.CreateIfNotExists();
+
+            var s = new Synchronizer(from, to, BlobStructure.SingleBlob);
+            await s.Run();
+
+            from.Received().Query(Arg.Any<TableQuery>());
+            var x = from.Received().Name;
+            to.Received().CreateIfNotExists();
+            to.Received().Save("test.json", JsonConvert.SerializeObject(entities));
         }
 
         [Test]
