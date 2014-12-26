@@ -37,6 +37,14 @@
         {
             get;
         }
+
+        /// <summary>
+        /// Structure for Blobs
+        /// </summary>
+        BlobStructure Structure
+        {
+            get;
+        }
         #endregion
     }
 }

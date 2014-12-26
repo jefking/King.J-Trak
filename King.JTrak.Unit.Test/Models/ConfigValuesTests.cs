@@ -66,5 +66,14 @@
 
             Assert.AreEqual(expected, c.ToConnectionString);
         }
+
+        [Test]
+        public void Structure()
+        {
+            var c = new ConfigValues();
+            Assert.AreEqual(BlobStructure.MultipleBlobs, c.Structure);
+            c.Structure = BlobStructure.SingleBlob;
+            Assert.AreEqual(BlobStructure.SingleBlob, c.Structure);
+        }
     }
 }

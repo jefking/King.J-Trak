@@ -41,6 +41,15 @@
             get;
             set;
         }
+
+        /// <summary>
+        /// Structure for Blobs
+        /// </summary>
+        public virtual BlobStructure Structure
+        {
+            get;
+            set;
+        }
         #endregion
     }
 }
