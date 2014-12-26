@@ -54,23 +54,30 @@
             var random = new Random();
             var count = random.Next(1, 25);
             var entities = new List<IDictionary<string, object>>();
+            var to = Substitute.For<IContainer>();
             for (var i = 0; i < count; i++)
             {
-                entities.Add(new Dictionary<string, object>());
+                var dic = new Dictionary<string, object>();
+                dic.Add(TableStorage.PartitionKey, Guid.NewGuid().ToString());
+                dic.Add(TableStorage.RowKey, Guid.NewGuid().ToString());
+                entities.Add(dic);
+                var name = string.Format("{0}-{1}.json", dic[TableStorage.PartitionKey], dic[TableStorage.RowKey]);
+                to.Save(name, dic);
             }
             var from = Substitute.For<ITableStorage>();
             from.Query(Arg.Any<TableQuery>()).Returns(Task.FromResult((IEnumerable<IDictionary<string, object>>)entities));
-            var to = Substitute.For<IContainer>();
             to.CreateIfNotExists();
-            //to.Insert(entities);
 
             var s = new Synchronizer(from, to);
             await s.Run();
 
             from.Received().Query(Arg.Any<TableQuery>());
             to.Received().CreateIfNotExists();
-            //to.Received().Insert(entities);
-
+            foreach (var dic in entities)
+            {
+                var name = string.Format("{0}-{1}.json", dic[TableStorage.PartitionKey], dic[TableStorage.RowKey]);
+                to.Received().Save(name, dic);
+            }
         }
 
         [Test]
@@ -80,14 +87,14 @@
             from.Query(Arg.Any<TableQuery>()).Returns(Task.FromResult((IEnumerable<IDictionary<string, object>>)null));
             var to = Substitute.For<IContainer>();
             to.CreateIfNotExists();
-            //to.Insert(Arg.Any<IEnumerable<IDictionary<string, object>>>());
+            to.Save(Arg.Any<string>(), Arg.Any<IDictionary<string, object>>());
 
             var s = new Synchronizer(from, to);
             await s.Run();
 
             from.Received().Query(Arg.Any<TableQuery>());
             to.Received().CreateIfNotExists();
-            //to.Received(0).Insert(Arg.Any<IEnumerable<IDictionary<string, object>>>());
+            to.Received(0).Save(Arg.Any<string>(), Arg.Any<IDictionary<string, object>>());
         }
     }
 }
