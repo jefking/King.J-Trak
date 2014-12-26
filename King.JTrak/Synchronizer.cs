@@ -6,7 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    class Synchronizer
+    public class Synchronizer : ISynchronizer
     {
+        public async Task Run()
+        {
+            await new TaskFactory().StartNew(() => { });
+        }
     }
 }
