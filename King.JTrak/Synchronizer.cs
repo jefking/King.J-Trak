@@ -81,7 +81,7 @@
                 Trace.TraceInformation("Storing data to {0}.", this.to.Name);
                 foreach (var e in entities)
                 {
-                    var name = string.Format("{0}-{1}", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
+                    var name = string.Format("{0}-{1}.json", e[TableStorage.PartitionKey], e[TableStorage.RowKey]);
                     await this.to.Save(name, e);
                 }
             }
